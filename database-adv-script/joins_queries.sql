@@ -1,4 +1,4 @@
-use `alx_airbnb_database`;
+--use `alx_airbnb_database`;
 
 SELECT * from Booking INNER join User on Booking.user_id = User.id  LIMIT 3;
 
