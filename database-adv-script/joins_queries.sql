@@ -1,7 +1,6 @@
 use `alx_airbnb_database`;
 
-
-SELECT * from Booking join User on Booking.user_id = User.id  LIMIT 3;
+SELECT * from Booking INNER join User on Booking.user_id = User.id  LIMIT 3;
 
 SELECT * from Property LEFT JOIN Review on Property.property_id = Review.property_id LIMIT 10 ;
 
