@@ -1,5 +1,10 @@
 USE `alx_airbnb_database`
 
+SELECT * , COUNT(*) AS TOTAL_BOOKING 
+FROM Booking 
+GROUP BY user_id
+
+
 SELECT 
     p.property_id,
     p.name,
