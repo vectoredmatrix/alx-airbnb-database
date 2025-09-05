@@ -1,11 +1,13 @@
 use `alx_airbnb_database`;
 
-SELECT  *
-FROM Property
-WHERE Property.property_id IN 
-( SELECT Review.property_id 
-FROM Review 
-WHERE Review.rating > 4.0 ); 
+SELECT * FROM Property 
+
+WHERE property_id IN (
+	SELECT property_id
+	FROM Review
+	GROUP BY property_id
+    HAVING AVG(rating)> 4.0
+     );
 
 
 SELECT  user_id
