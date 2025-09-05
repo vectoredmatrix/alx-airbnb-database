@@ -119,3 +119,78 @@ Example candidates:
 - Queries execute faster.
 - Reduced full table scans.
 - Filtering, joining, and sorting operations are more efficient.
+
+# Query Performance Optimization
+
+This folder contains SQL scripts that demonstrate how to analyze and optimize query performance in the **ALX Airbnb Database**.
+
+## Workflow
+
+### 1. Initial Query
+
+We start with a query that retrieves:
+
+- Booking details
+- User details
+- Property details
+- Payment details
+
+The query joins the `Booking`, `User`, `Property`, and `Payment` tables.
+
+### 2. Analyze with `EXPLAIN`
+
+We run the query with `EXPLAIN` (or `EXPLAIN ANALYZE` in PostgreSQL) to understand how the database executes it.  
+This shows:
+
+- Which indexes (if any) are used
+- Whether a **full table scan** is happening (`ALL`)
+- If **temporary tables** or **filesort** are used
+
+⚠️ Without indexes, large tables often result in:
+
+- `ALL` (full scan)
+- `Using temporary; Using filesort` → expensive operations
+
+### 3. Identify Inefficiencies
+
+From the `EXPLAIN` plan we look for:
+
+- Missing index usage (`key = NULL`)
+- Large number of scanned rows
+- Extra operations like sorting or temp tables
+
+### 4. Refactor Query
+
+To improve performance, we:
+
+- Remove unnecessary joins (e.g., payment details can be fetched separately if not always required).
+- Only select needed columns instead of `SELECT *`.
+
+### 5. Add Indexes
+
+We create indexes on **high-usage columns**:
+
+- `Booking(user_id)` → speeds up joining bookings to users
+- `Booking(property_id)` → speeds up joining bookings to properties
+- `Booking(status)` → helps filtering by booking status
+- `Payment(booking_id)` → helps joining payments to bookings
+
+### 6. Measure Again
+
+Run `EXPLAIN` after adding indexes:
+
+- Expect to see `ref` or `eq_ref` instead of `ALL`.
+- Number of scanned rows drops significantly.
+- Temporary tables/filesorts disappear.
+
+✅ This shows the query is now optimized and will execute much faster on large datasets.
+
+---
+
+## Usage
+
+1. Run the initial query in **`performance.sql`**.
+2. Analyze performance:
+   ```sql
+   EXPLAIN SELECT ...;
+   ```
