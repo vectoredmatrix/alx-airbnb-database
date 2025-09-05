@@ -2,7 +2,7 @@
 -- Initial query: Retrieve all bookings with user, property, and payment details
 -- Note: No WHERE / AND clauses are used here (full dataset).
 
-SELECT 
+EXPLAIN SELECT 
     b.booking_id,
     b.start_date,
     b.end_date,
