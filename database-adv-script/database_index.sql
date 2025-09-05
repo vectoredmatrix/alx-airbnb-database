@@ -30,8 +30,6 @@ ON Review(property_id);
 CREATE INDEX idx_review_rating
 ON Review(rating); EXPLAIN
 
-SELECT  *
-FROM Booking b
-JOIN User u
-ON b.user_id = u.id
+EXPLAIN ANALYZE SELECT * FROM Booking b
+JOIN User u ON b.user_id = u.id
 WHERE b.status = 'confirmed';
